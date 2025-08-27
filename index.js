@@ -48,29 +48,9 @@ let exerciseSchema = new mongoose.Schema({
   }
 });
 
-// let logSchema = new mongoose.Schema({
-//   userId: {
-//     type: mongoose.Schema.Types.ObjectId,
-//     ref: 'User',
-//     required: true,
-//   },
-//   description: {
-//     type: String,
-//     required: true,
-//   },
-//   duration: {
-//     type: Number,
-//     required: true,
-//   },
-//   date: {
-//     type: Date,
-//     default: Date.now
-//   }
-// });
 
 let User = mongoose.model('User', userSchema);
 let Exercise = mongoose.model('Exercises', exerciseSchema);
-// let Log = mongoose.model('Logs', exerciseSchema);
 
 app.route('/api/users')
   .get(async (req, res) => {
@@ -84,12 +64,9 @@ app.route('/api/users')
     }
   })
   .post(async (req, res) => {
-    // console.log(req.body);
     const username = req.body.username;
-    // console.log(username);
     try {
       const user = new User({ username });
-      // console.log(user);
       await user.save();
       res.json(user);
     }
@@ -175,8 +152,6 @@ app.route('/api/users/:_id/logs')
       res.status(500).json({ error: err.message });
     }
   });
-
-
 
 const listener = app.listen(process.env.PORT || 3000, () => {
   console.log('Your app is listening on port ' + listener.address().port);
